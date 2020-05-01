@@ -1,0 +1,22 @@
+{% extends "Layout.html" %}
+
+{% block title %}
+Books Login
+{% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col">
+    <h3>Books Login</h3>
+  </div>
+  <div class="col">
+    <form>
+      <label for="User">Username: </label>
+      <input type="text" name="Username" id="User" autocomplete="off">
+      <label for="Pass">Password: </label>
+      <input type="password" name="Password" id="Pass" autocomplete="off">
+      <input type="submit" name="login">
+    </form>
+  </div>
+</div>
+{% endblock %}
