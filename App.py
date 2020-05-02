@@ -1,5 +1,6 @@
 import os
 from flask import Flask, render_template, request
+from sqlalchemy import and_
 
 from models import *
 
@@ -41,8 +42,18 @@ def regconfirm():
     password = request.form.get("Password")
     passwordconfirm =request.form.get("Password2")
     if (password != passwordconfirm):
-        return render_template("/Confirmation.html" Message="Error", confirmationmessage="Passwords do not match")
+        return render_template("/Confirmation.html", Message="Error", confirmationmessage="Passwords do not match")
     new_user = Users(first_name = first_name, last_name = last_name, username = username, password = password)
     db.session.add(new_user)
     db.session.commit()
     return render_template("/Confirmation.html", Message="Success", confirmationmessage="User Created")
+
+@app.route("/Search", methods=["POST"])
+def search():
+    username = request.form.get("Username")
+    password = request.form.get("Password")
+    user = Users.query.filter(and_(Users.username == username, Users.password == password)).all()
+    if user:
+        return render_template("./Search.html")
+    else:
+        return render_template("./Confirmation.html", Message="Error", confirmationmessage="Wrong Credentials")
