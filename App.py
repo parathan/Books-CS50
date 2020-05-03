@@ -63,4 +63,13 @@ def search():
 def booktable():
     searchmethod = request.form.get("searchmethod")
     searchvalue = request.form.get("search")
-    
+    if searchmethod == "ISBN":
+        searchtable = Books.query.filter(Books.isbn.like(f"%{searchvalue}%")).all()
+    elif searchmethod == "Title":
+        searchtable = Books.query.filter(Books.title.like(f"%{searchvalue}%")).all()
+    else:
+        searchtable = Books.query.filter(Books.author.like(f"%{searchvalue}%")).all()
+    if searchtable is None:
+        return render_template("./Booktable.html", message = "No such books found")
+    else:
+        return render_template("./Booktable.html", message = "Please find search results below", books=searchtable)

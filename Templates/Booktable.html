@@ -10,6 +10,12 @@ Book table
     <h3>Book Table</h3>
   </div>
   <div class="col">
+    {{ message }}
+    <ul>
+      {% for book in books %}
+        <li>ISBN: {{ book.isbn }} Title: {{ book.title }} Author: {{ book.author }} year: {{ book.year }}</li>
+      {% endfor %}
+    </ul>
   </div>
 </div>
 {% endblock %}
