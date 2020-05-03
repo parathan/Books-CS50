@@ -10,12 +10,14 @@ Search Page
     <h3>Search page</h3>
   </div>
   <div class="col">
-    <form>
-      <select class="form-control">
-        <option>ISBN Number</option>
-        <option>Title of Book</option>
-        <option>Author of Book</option>
-      </select>
+    <form action="./Booktable" method="post">
+      <select class="form-control" name="searchmethod">
+        <option value="ISBN">ISBN Number</option>
+        <option value="Title">Title of Book</option>
+        <option value="Author">Author of Book</option>
+      </select><br>
+      <label for="Search">Search: </label>
+      <input type="text" name="search" autocomplete="off">
     </form>
   </div>
 </div>

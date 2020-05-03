@@ -4,6 +4,7 @@ from sqlalchemy import and_
 
 from models import *
 
+
 app=Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
@@ -57,3 +58,9 @@ def search():
         return render_template("./Search.html")
     else:
         return render_template("./Confirmation.html", Message="Error", confirmationmessage="Wrong Credentials")
+
+@app.route("/Booktable", methods=["POST"])
+def booktable():
+    searchmethod = request.form.get("searchmethod")
+    searchvalue = request.form.get("search")
+    
