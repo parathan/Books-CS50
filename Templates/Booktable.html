@@ -13,7 +13,9 @@ Book table
     {{ message }}
     <ul>
       {% for book in books %}
-        <li>ISBN: {{ book.isbn }} Title: {{ book.title }} Author: {{ book.author }} year: {{ book.year }}</li>
+        <a >
+          <li>ISBN: {{ book.isbn }} Title: {{ book.title }} Author: {{ book.author }} year: {{ book.year }}</li>
+        </a>
       {% endfor %}
     </ul>
   </div>
