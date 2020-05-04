@@ -13,7 +13,7 @@ Book table
     {{ message }}
     <ul>
       {% for book in books %}
-        <a >
+        <a href="{{ url_for('book', book_id=book.id) }}">
           <li>ISBN: {{ book.isbn }} Title: {{ book.title }} Author: {{ book.author }} year: {{ book.year }}</li>
         </a>
       {% endfor %}

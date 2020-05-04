@@ -73,3 +73,8 @@ def booktable():
         return render_template("./Booktable.html", message = "No such books found")
     else:
         return render_template("./Booktable.html", message = "Please find search results below", books=searchtable)
+
+@app.route("/book/<int:book_id>")
+def book(book_id):
+    book = Books.query.get(book_id)
+    return render_template("./Book.html", Title=book.title, Bookname=book.title)
