@@ -77,7 +77,8 @@ def booktable(username):
 @app.route("/book/<username>/<int:book_id>")
 def book(book_id, username):
     book = Books.query.get(book_id)
-    return render_template("./Book.html", book=book, username=username)
+    reviews = Reviews.query.filter(Reviews.title==book.title).all()
+    return render_template("./Book.html", book=book, username=username, reviews=reviews)
 
 @app.route("/Searchagain/<username>/<bookname>", methods=["POST"])
 def review(bookname, username):
