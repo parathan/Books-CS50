@@ -1,9 +1,29 @@
 {% extends "Layout.html" %}
 
 {% block title %}
-{{ Title }}
+{{ book.title }}
 {% endblock %}
 
 {% block body %}
-{{ Bookname }}
+<div class="row">
+  <div class="col">
+    <h3>{{ book.title }}</h3>
+  </div>
+  <div class="col">
+    <p>
+      Book Title: {{ book.title }}<br>
+      Book Author: {{ book.author }}<br>
+      Book ISBN: {{ book.isbn }}<br>
+    </p>
+  </div>
+  <div class="col">
+    <form action="{{ url_for('review', bookname=book.title, username=username) }}" method="post">
+      <label for="points">Rating: </label>
+      <input type="number" name="rating" id="rating" min="1" max="5"><br>
+      <label for="review">Review: </label>
+      <input type="text" name="review" id="review" autocomplete="off"><br>
+      <input type="submit">
+    </form>
+  </div>
+</div>
 {% endblock %}

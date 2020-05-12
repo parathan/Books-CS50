@@ -7,10 +7,11 @@ Search Page
 {% block body %}
 <div class="row">
   <div class="col">
-    <h3>Search page</h3>
+    <h3>Search page</h3><br>
+    <h5>Welcome, {{ username }}<h5>
   </div>
   <div class="col">
-    <form action="./Booktable" method="post">
+    <form action="{{ url_for('booktable', username=username) }}" method="post">
       <select class="form-control" name="searchmethod">
         <option value="ISBN">ISBN Number</option>
         <option value="Title">Title of Book</option>

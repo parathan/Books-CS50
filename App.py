@@ -7,7 +7,7 @@ from models import *
 
 app=Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://llsimqlrbzioru:cb67ae337584aa335aa569e499e5bcfaf76517d7f744a02f363a553ff8e90a52@ec2-34-225-82-212.compute-1.amazonaws.com:5432/d2jj16lvup4u56"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
@@ -55,12 +55,12 @@ def search():
     password = request.form.get("Password")
     user = Users.query.filter(and_(Users.username == username, Users.password == password)).all()
     if user:
-        return render_template("./Search.html")
+        return render_template("./Search.html", username=username)
     else:
         return render_template("./Confirmation.html", Message="Error", confirmationmessage="Wrong Credentials")
 
-@app.route("/Booktable", methods=["POST"])
-def booktable():
+@app.route("/Booktable/<username>", methods=["POST"])
+def booktable(username):
     searchmethod = request.form.get("searchmethod")
     searchvalue = request.form.get("search")
     if searchmethod == "ISBN":
@@ -70,11 +70,21 @@ def booktable():
     else:
         searchtable = Books.query.filter(Books.author.like(f"%{searchvalue}%")).all()
     if searchtable is None:
-        return render_template("./Booktable.html", message = "No such books found")
+        return render_template("./Booktable.html", message = "No such books found", username=username)
     else:
-        return render_template("./Booktable.html", message = "Please find search results below", books=searchtable)
+        return render_template("./Booktable.html", message = "Please find search results below", books=searchtable, username=username)
 
-@app.route("/book/<int:book_id>")
-def book(book_id):
+@app.route("/book/<username>/<int:book_id>")
+def book(book_id, username):
     book = Books.query.get(book_id)
-    return render_template("./Book.html", Title=book.title, Bookname=book.title)
+    return render_template("./Book.html", book=book, username=username)
+
+@app.route("/Searchagain/<username>/<bookname>", methods=["POST"])
+def review(bookname, username):
+    rawrating = request.form.get("rating")
+    rating = int(rawrating)
+    review = request.form.get("review")
+    new_review = Reviews(username=username, title=bookname, rating=rating, review=review)
+    db.session.add(new_review)
+    db.session.commit()
+    return render_template("./Search.html", username=username)
